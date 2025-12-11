@@ -7,5 +7,11 @@ variable "aws_region" {
 variable "backend_port" {
   description = "Backend Application Port"
   type        = number
-  default     = 80
+  default     = 8080
+}
+
+variable "postgres_rds_port" {
+  description = "PostgreSQL Port"
+  type        = number
+  default     = 5432
 }
