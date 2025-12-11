@@ -59,7 +59,9 @@ resource "aws_subnet" "private_2" { # AZ2 Private
 }
 
 resource "aws_eip" "nat_1" { # NAT1 EIP
-  vpc = true
+  tags = {
+    Name = "TIB-nat-eip-1"
+  }
 }
 
 resource "aws_nat_gateway" "nat_1" { # NAT1 Gateway
@@ -72,7 +74,9 @@ resource "aws_nat_gateway" "nat_1" { # NAT1 Gateway
 }
 
 resource "aws_eip" "nat_2" { # NAT2 EIP
-  vpc = true
+  tags = {
+    Name = "TIB-nat-eip-2"
+  }
 }
 
 resource "aws_nat_gateway" "nat_2" { # NAT2 Gateway
