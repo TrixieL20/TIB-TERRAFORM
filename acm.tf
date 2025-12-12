@@ -1,11 +1,6 @@
-provider "aws" {
-  region = "us-east-1"
-  alias  = "us_east_1"
-}
-
 resource "aws_acm_certificate" "frontend" {
   provider          = aws.us_east_1
-  domain_name       = "www.example.com"
+  domain_name       = "www.tib-time-in-busan.com"
   validation_method = "DNS"
 
   lifecycle {
@@ -13,4 +8,12 @@ resource "aws_acm_certificate" "frontend" {
   }
 }
 
-# (옵션) Route53 DNS 자동 검증 추가 가능
+resource "aws_acm_certificate" "backend" {
+  provider          = aws
+  domain_name       = "api.tib-time-in-busan.com"
+  validation_method = "DNS"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}

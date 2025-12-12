@@ -4,12 +4,6 @@ variable "aws_main_region" {
   default     = "ap-northeast-2"
 }
 
-variable "aws_sub_region" {
-  description = "AWS sub region to deploy resources (Virginia)"
-  type        = string
-  default     = "us_east_1"
-}
-
 variable "backend_port" {
   description = "Backend Application Port"
   type        = number
