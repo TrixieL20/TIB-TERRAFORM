@@ -32,29 +32,29 @@ resource "aws_cloudfront_origin_access_control" "oac" { # private인 S3로부터
 }
 
 resource "aws_cloudfront_distribution" "frontend" {
-  enabled = true
+  enabled = true # CloudFront 배포 활성화
 
-  origin {
-    domain_name = aws_s3_bucket.frontend.bucket_regional_domain_name
+  origin {                                                           # CloudFront가 실제 콘텐츠(원본)를 가져올 Origin 정의
+    domain_name = aws_s3_bucket.frontend.bucket_regional_domain_name # CloudFront가 원본 요청을 보낼 도메인. S3 버킷의 리전별 엔드포인트
     origin_id   = "s3-frontend"
 
-    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.oac.id # S3 접속을 위한 OAC id 연결
   }
 
   default_cache_behavior {
-    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-    cached_methods         = ["GET", "HEAD"]
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"] # CloudFront에 사용할 수 있는 HTTP 메서드 집합
+    cached_methods         = ["GET", "HEAD"]            # 캐시 대상으로 처리할 메서드
     target_origin_id       = "s3-frontend"
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = "redirect-to-https" # redirect-to-https
 
     # forwarded_values {
-    #   query_string = false
+    #   query_string = false # 쿼리 스트링 전달 X
 
     #   cookies {
     #     forward = "none"
     #   }
 
-    #   headers = ["CloudFront-Viewer-Country"]
+    #   headers = ["CloudFront-Viewer-Country"] # 국가 코드 origin으로 전달
     # }
 
     # lambda_function_association { # Lambda@Edge 람다를 통한 html 제공
@@ -78,7 +78,7 @@ resource "aws_cloudfront_distribution" "frontend" {
 
   restrictions {
     geo_restriction {
-      restriction_type = "none"
+      restriction_type = "none" # 지리적 접근 제한 X
     }
   }
 }
