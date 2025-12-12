@@ -1,9 +1,3 @@
-# ✔ React/Vue/Next 정적 빌드 결과물을 올린다
-# ✔ S3는 public 접근 차단
-# ✔ CloudFront가 Origin Access Control(OAC)로 접근
-# ✔ HTTPS(ACM) 인증서 포함
-# ✔ 기본 index.html / error.html 처리까지 완備
-
 resource "aws_s3_bucket" "frontend" { # 프론트엔드 정적 코드를 위한 S3
   bucket = "TIB-frontend-bucket"
 }
