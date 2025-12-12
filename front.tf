@@ -47,15 +47,20 @@ resource "aws_cloudfront_distribution" "frontend" {
     target_origin_id       = "s3-frontend"
     viewer_protocol_policy = "redirect-to-https"
 
-    forwarded_values {
-      query_string = false
+    # forwarded_values {
+    #   query_string = false
 
-      cookies {
-        forward = "none"
-      }
+    #   cookies {
+    #     forward = "none"
+    #   }
 
-      headers = ["CloudFront-Viewer-Country"]
-    }
+    #   headers = ["CloudFront-Viewer-Country"]
+    # }
+
+    # lambda_function_association { # Lambda@Edge 람다를 통한 html 제공
+    #   event_type   = "viewer-request"
+    #   lambda_arn   = aws_lambda_function.country_redirect.qualified_arn
+    # }
   }
 
   viewer_certificate {
@@ -77,3 +82,14 @@ resource "aws_cloudfront_distribution" "frontend" {
     }
   }
 }
+
+# resource "aws_lambda_function" "country_redirect" { # lambda@edge 지원을 위한 람다 설정
+#   provider = aws.us_east_1
+
+#   filename         = "lambda_edge.zip"
+#   function_name    = "country_redirect_edge"
+#   role             = aws_iam_role.edge_lambda_role.arn
+#   handler          = "index.handler"
+#   runtime          = "nodejs18.x"
+#   publish          = true
+# }
