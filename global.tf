@@ -11,6 +11,12 @@ terraform { # 엔진
 }
 
 provider "aws" { # AWS 리소스 생성 & API 요청 보냄
-  region  = var.aws_region
+  region  = var.aws_main_region
+  profile = "myprofile"
+}
+
+provider "aws" { # CloudFront ACM, lambda@edge 지원 대비
+  alias   = "us_east_1"
+  region  = "us-east-1"
   profile = "myprofile"
 }
